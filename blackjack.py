@@ -26,7 +26,8 @@ def main():
         but must hit exactly one more time before standing.
           
         In case of a tie, the bet is returned to the player.
-        The dealer stops hitting at 17.''')
+        The dealer stops hitting at 17.
+          ''')
     
     money = 5000
     while True: # Main game loop.
@@ -108,7 +109,7 @@ def main():
             print('You lost!')
             money -= bet
         elif player_value > dealer_value:
-            print('You won ${bet}!')
+            print(f'You won ${bet}!')
             money += bet
         elif player_value == dealer_value:
             print ("It's a tie, the bet is returned you")
@@ -169,7 +170,7 @@ def Get_Hand_Value(cards):
 
     # Add the value for the non-ace cards:
     for card in cards:
-        rank = [0] # card is a tuple like (rank, suit)
+        rank = card[0] # card is a tuple like (rank, suit)
         if rank == 'A':
             number_of_aces += 1
         elif rank in ('K', 'Q', 'J'): # Face cards are worth 10 points.
@@ -191,7 +192,7 @@ def Display_Cards(cards):
     rows = ['', '', '', '', '',] # The text to display on each row.
 
     for i, card in enumerate(cards):
-        rows[0] += '___ ' # Print the top line of the card.
+        rows[0] += ' ___  ' # Print the top line of the card.
         if card == BACKSIDE:
             # Print a card's back:
             rows[1] += '|## | '
@@ -200,9 +201,9 @@ def Display_Cards(cards):
         else:
             # Print the card's front:
             rank, suit = card # The card is a tuple data structure
-            rows[1] += '|{} |'.format(rank.ljust(2))
-            rows[2] += '| {} |'.format(suit)
-            rows[3] += '|_{}|'.format(rank.rjust(2, '_'))
+            rows[1] += '|{} | '.format(rank.ljust(2))
+            rows[2] += '| {} | '.format(suit)
+            rows[3] += '|_{}| '.format(rank.rjust(2, '_'))
 
     for row in rows:
         print(row)
@@ -224,6 +225,8 @@ def Get_Move(player_hand, money):
         move_prompt = ', '.join(moves) + '> '
         move = input(move_prompt).upper()
         if move in ('H', 'S'):
+            return move # Player has entered a valid move.
+        if move == 'D' and '(D)ouble down' in moves:
             return move # Player has entered a valid move.
         
 
